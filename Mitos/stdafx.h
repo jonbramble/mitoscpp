@@ -10,6 +10,11 @@
 #include <stdio.h>
 #include <tchar.h>
 
+#include <iostream>
+#include <ostream>
+#include <string>
+#include <vector>
+
 #include <windows.h>
 
 
