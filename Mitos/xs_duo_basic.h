@@ -31,10 +31,14 @@ namespace Mitos{
 		bool fill_syringe(const int address);
 		bool empty_syringe(const int address);
 
-		void info();
-		void run();
+		void dispense(const int address, const int amount);
 
-		void clear_queue();
+		void quick_start();
+
+		void info();
+		bool run();
+
+		void prepare_pump(); //this must be called
 
 	private:
 		serial::Serial *sp;
@@ -46,8 +50,10 @@ namespace Mitos{
 		std::string listen();
 		void flush_input();
 		void write(const std::string);
+		void close();
 
-		ResponseState parse_response(const std::string);
+		void clear_queue();
+		void write_stop();
 
 		void add_to_queue(const int address, const std::string cmd);
 		void prepend_queue(const int address, const std::string cmd);

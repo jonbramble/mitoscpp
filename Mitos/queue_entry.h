@@ -11,16 +11,7 @@ namespace Mitos {
 		int address;
 
 	public:
-		QueueEntry(std::string _command, std::string _request, int _address) : command(_command), request(_request), address(_address){
-
-		}
-
-		/*QueueEntry::QueueEntry(const QueueEntry &obj){
-			std::cout << "copy ctor" << std::endl;
-			command = obj.command;
-			request = obj.request;
-			address = obj.address;
-		}*/
+		QueueEntry(std::string _command, std::string _request, int _address): command(_command), request(_request), address(_address){}
 
 		std::string get_command() const{
 			return command;

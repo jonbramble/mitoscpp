@@ -19,8 +19,7 @@ class ResponseState{
 	bool sensor_error;
 
 	typedef std::vector<std::string> split_vector_type;
-	split_vector_type v_resp;
-
+	
 public:
 	ResponseState(const std::string msg);
 	~ResponseState();

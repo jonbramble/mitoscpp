@@ -13,7 +13,6 @@ namespace Mitos {
 
 	const int SYRINGE_SIZE = 2500;
 
-
 	class Syringe
 	{
 		const int address;

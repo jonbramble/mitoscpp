@@ -25,15 +25,11 @@ namespace Mitos {
 
 		bool CommandQueue::movement(){
 			bool ret = false;
-			if (!q.empty()){
-				QueueEntry entry(q.front());
-				std::string req = entry.get_request();
-				std::string req_header(req, 0, 2);
-				std::cout << "movement: " << req_header << std::endl;
-				if (req_header == "E2" || req_header == "I2"){
-					ret = true;
-				}
-			}
+	
+			QueueEntry entry(q.front());
+			std::string req = entry.get_request();
+			std::string req_header(req, 0, 2);
+			if (req_header == "E2" || req_header == "I2"){ret = true; }	
 			return ret;
 		}
 
@@ -44,10 +40,6 @@ namespace Mitos {
 		int CommandQueue::get_address() const{
 			return address;
 		}
-
-		//void CommandQueue::requests(){
-			// not sure what this was for in the ruby version
-		//}
 
 		//empty the array here
 		void CommandQueue::clear(){

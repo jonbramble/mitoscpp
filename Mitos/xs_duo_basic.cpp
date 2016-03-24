@@ -56,35 +56,56 @@ namespace Mitos{
 
 	}
 
-	void XsDuoBasic::run(){
-		write_command_status(0);
-
-		while (true) {
-			std::string str = listen();
-			ResponseState rep = parse_response(str);
-
-			if (rep.get_status()){
-				if (process_status(rep)){
-					break;
-				}
-			}
-			else if (!rep.get_status()){
-				process_command(rep);
-			}
-			else {
-				std::cout << "Unknown message type" << std::endl;
-			}
-		}
+	void XsDuoBasic::quick_start(){
+		set_rate(0, 2000);
+		set_rate(1, 2000);
+		set_port(0, valve_position::A);
+		set_port(1, valve_position::D);
 	}
 
-	ResponseState XsDuoBasic::parse_response(const std::string msg){
-		ResponseState rep(msg);
-		return rep;
+	void XsDuoBasic::write_stop(){
+		std::string str = listen();
+		//parse_response(str);
+
+		queues[0].unshift(STOP);
+		queues[1].unshift(STOP);
+		write(queues[0].shift().get_command());
+		write(queues[1].shift().get_command());
+
+		str = listen();
+		//parse_response(str);
+
+		str = listen();
+		//parse_response(str);
+
+	}
+
+	void XsDuoBasic::prepare_pump(){
+		write_command_status(0);
+	}
+
+	bool XsDuoBasic::run(){
+		bool ret = false;
+		std::string str = listen();
+		ResponseState rep(str);
+		if (rep.get_status()){
+			if (process_status(rep)){
+				//break;  // never ending without this
+				ret = true;
+			}
+		}
+		else if (!rep.get_status()){
+			process_command(rep);
+		}
+		else {
+			std::cout << "Unknown message type" << std::endl;
+		}
+		return ret;
 	}
 
 	void XsDuoBasic::process_command(const ResponseState rep){
 		int address = rep.get_address();
-		int res_type = rep.get_rsp_type(); //could use enum here
+		int res_type = rep.get_rsp_type();
 
 		switch (res_type){
 		case 0:
@@ -110,41 +131,40 @@ namespace Mitos{
 		int ret = 0;
 		bool empty = false;
 
-		// could let syringe have rep and set values
 		int _syringe_position = rep.get_syringe_position();
 		int _syringe_motor = rep.get_syringe_motor();
 		int _valve_position = rep.get_valve_position();
 		int _valve_motor = rep.get_valve_motor();
 
-		syringes[address].set_motor(_syringe_motor);
+		syringes[address].set_motor(_syringe_motor);												//set the object status from the resp state
 		syringes[address].set_position(_syringe_position);
 		valves[address].set_motor(_valve_motor);
 		valves[address].set_position(static_cast<valve_position>(_valve_position));
 
-		bool these_motors = valves[address].get_motor() == 1 && syringes[address].get_motor();
-		bool other_motors = valves[other_address].get_motor() == 1 && syringes[other_address].get_motor();
+		bool these_motors = (valves[address].get_motor() == 1) && (syringes[address].get_motor() == 1);				//are the motors stationary? 1 yes 2 no
+		bool other_motors = (valves[other_address].get_motor() == 1) && (syringes[other_address].get_motor() == 1); //are the other motors stationary?
 
-		bool motors = these_motors && other_motors;
-		empty = queues[address].empty() && queues[other_address].empty();
+		bool motors = these_motors && other_motors;													//are all motor stationary?
+		empty = queues[address].empty() && queues[other_address].empty();							//are the queues empty?
 
-		if (queues[address].empty() ){
+		if (queues[address].empty() ){																//if this queue is empty - write status on other
 			write_command_status(other_address);
 		}
-		else {
-			if (queues[address].movement()){
-				if (these_motors){
-					write(queues[address].shift().get_command());
+		else {																						//if they are not empty then ...
+			if (queues[address].movement()){														//if the next command is a movement command
+				if (these_motors){																	//if the motors are stationary
+					write(queues[address].shift().get_command());									//write the movement command to the queue
 				}
-				else {
+				else {																				//else write a status command on the other queue
 					write_command_status(other_address);
 				}
 			}
 			else {
-				write(queues[address].shift().get_command());
+				write(queues[address].shift().get_command());										//write the non movement command
 			}
 		}
 
-		return empty && motors;
+		return empty && motors;																		//if the motors are stationary and the queues are empty then stop
 	}
 
 	void XsDuoBasic::write_command_status(const int address){
@@ -175,34 +195,34 @@ namespace Mitos{
 		while (!queues[0].empty()){
 			write(queues[0].shift().get_command());
 			std::string rep = listen();
-			std::cout << rep << std::endl;
-			parse_response(rep);
+			//ResponseState rst(rep);  // not doing anything with this
 		}
 
 		while (!queues[1].empty()){
 			write(queues[1].shift().get_command());
 			std::string rep = listen();
-			std::cout << rep << std::endl;
-			parse_response(rep);
+			//ResponseState rst(rep);
 		}
 
 		Sleep(1000);
 
 		write_command_status(0);
 		std::string rep = listen();
-		std::cout << rep << std::endl;
-		parse_response(rep);
+		//ResponseState rst(rep);
 
 		write_command_status(1);
 		rep = listen();
-		std::cout << rep << std::endl;
-		parse_response(rep);
+		//rst(rep);
 	}
 
 	void XsDuoBasic::write(std::string cmd){
 		std::cout << cmd << std::endl;
 		sp->write(cmd);
 		Sleep(250);
+	}
+
+	void XsDuoBasic::close(){
+		sp->close();
 	}
 
 	void XsDuoBasic::add_to_queue(const int address, const std::string cmd){
@@ -221,6 +241,8 @@ namespace Mitos{
 	}
 
 	XsDuoBasic::~XsDuoBasic(){
+		write_stop();
+		close();
 		delete sp;
 	}
 

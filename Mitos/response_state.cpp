@@ -4,30 +4,35 @@
 
 ResponseState::ResponseState(const std::string msg) : status(false), rsp_type(0), address(0), syringe_motor(0), valve_motor(0), syringe_position(0), valve_position(0), sensor_error(false){
 
-	split(v_resp, msg, is_any_of(" "), token_compress_on);
+	split_vector_type v_resp;
 
+	split(v_resp, msg, is_any_of(" "), token_compress_on);
 	std::string header = v_resp[0];
 
+	char a_header[5];
+	strcpy_s(a_header, header.c_str());
+
+
+
 	int rec_rsp_type = std::stoi(v_resp[1]);
-	int rec_msg_type = std::atoi(&header[3]);
-	int rec_address = std::atoi(&header[2]);
+	char rec_msg_type = a_header[3];
+	char rec_address = a_header[2]; // error here
 
-	address = rec_address;  // error here
+	address = std::atoi(&rec_address);  
 
-	if (rec_msg_type == 1){
+	if (rec_msg_type == '1'){
+		status = false;
+		rsp_type = rec_rsp_type;
+	}
+	else if (rec_msg_type == '9'){
 		status = true;
 		rsp_type = rec_rsp_type;
-		//std::cout << "msg 1" << std::endl;
-	}
-	else if (rec_msg_type == 9){
-		status = true;
 		syringe_motor = std::stoi(v_resp[1]);
 		valve_motor = std::stoi(v_resp[2]);
 		syringe_position = std::stoi(v_resp[3]);
 		valve_position = std::stoi(v_resp[4]);
-		//std::cout << "msg 9" << std::endl;
 	}
-	else if (rec_msg_type == 8){
+	else if (rec_msg_type == '8'){
 		sensor_error = true;
 	}
 	else
