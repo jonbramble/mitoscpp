@@ -1,3 +1,6 @@
+#pragma once
+
+
 #include "stdafx.h"
 #include "queue_entry.h"
 
@@ -42,8 +45,6 @@ namespace Mitos {
 		std::string command_string(const std::string _request);		// Create command string to send to pump
 		std::deque<QueueEntry> q;									// The internal queue
 		int address;												// Address of the queue
-
-
 
 	};
 }
