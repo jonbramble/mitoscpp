@@ -15,6 +15,11 @@ using namespace boost;
 
 namespace Mitos {
 
+	/**
+	*  @brief Class to represent and process the response state messages
+	*
+	*
+	*/
 	class ResponseState{
 
 		bool status;
@@ -32,7 +37,7 @@ namespace Mitos {
 		/**
 		*  @brief Construct a response state object for each syringe by return message
 		*
-		*  @param message string
+		*  @param msg string
 		*/
 		ResponseState(const std::string msg);
 		~ResponseState();

@@ -15,6 +15,11 @@
 
 namespace Mitos {
 
+	/**
+	*  @brief Queue for commands to send to pump
+	*
+	*
+	*/
 	class CommandQueue {
 
 	public:
@@ -22,7 +27,7 @@ namespace Mitos {
 		/**
 		*  @brief Construct a command queue for each syringe by address
 		*
-		*  @param Address int
+		*  @param _address int
 		*/
 		CommandQueue(const int _address);
 		
@@ -79,14 +84,14 @@ namespace Mitos {
 		/**
 		*  @brief Add object at the back of the queue
 		*
-		*  @param request const string
+		*  @param _request const string
 		*/
 		void push_back(const std::string _request);	
 
 		/**
 		*  @brief Prepend object to the front of the queue
 		*
-		*  @param request const string
+		*  @param _request const string
 		*/
 		void unshift(const std::string _request);	
 	

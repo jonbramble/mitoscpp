@@ -21,6 +21,11 @@ namespace Mitos {
 
 	const int SYRINGE_SIZE = 2500;
 
+	/**
+	*  @brief Class to represent and the syringe state
+	*
+	*
+	*/
 	class Syringe
 	{
 		const int address;
@@ -32,7 +37,7 @@ namespace Mitos {
 		/**
 		*  @brief Construct a syringe object for each syringe by address
 		*
-		*  @param Address int
+		*  @param _address int
 		*/
 		Syringe(const int _address);
 		~Syringe();
@@ -85,21 +90,21 @@ namespace Mitos {
 		/**
 		*  @brief Set the syringe rate
 		*
-		*  @param Rate int
+		*  @param _rate int
 		*/
 		void set_rate(const int _rate);
 
 		/**
 		*  @brief Set the motor statue
 		*
-		*  @param motorstate int
+		*  @param _motor int
 		*/
 		void set_motor(const int _motor);
 
 		/**
 		*  @brief Set the syringe position
 		*
-		*  @param position int
+		*  @param _position int
 		*/
 		void set_position(const int _position);
 

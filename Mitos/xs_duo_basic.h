@@ -29,6 +29,12 @@ namespace Mitos{
 	const std::string STATUS = "S3";
 	const std::string STOP = "X";
 
+
+	/**
+	*  @brief Class to represent the XS Duo Basic Pump
+	*
+	*
+	*/
 	class XsDuoBasic{
 
 	public:
@@ -38,7 +44,7 @@ namespace Mitos{
 		*
 		*  The addresses of the pumps are 0 and 1 left to right
 		*  Port names on windows eg. COM4
-		*  @param Port String
+		*  @param _port string
 		*/
 		XsDuoBasic(std::string _port);
 
@@ -61,8 +67,8 @@ namespace Mitos{
 		/**
 		*  @brief Set the pump rate ul/min
 		*
-		*  @param Address int
-		*  @param Rate int
+		*  @param address int
+		*  @param rate int
 		*
 		*/
 		bool set_rate(const int address, const int rate);
@@ -70,7 +76,7 @@ namespace Mitos{
 		/**
 		*  @brief Set the port position
 		*
-		*  @param Address int
+		*  @param address int
 		*  @param position valve_position
 		*
 		*/
@@ -79,7 +85,7 @@ namespace Mitos{
 		/**
 		*  @brief Fill the syringe
 		*
-		*  @param Address int
+		*  @param address int
 		*
 		*/
 		bool fill_syringe(const int address);
@@ -87,7 +93,7 @@ namespace Mitos{
 		/**
 		*  @brief Empty the syringe
 		*
-		*  @param Address int
+		*  @param address int
 		*
 		*/
 		bool empty_syringe(const int address);
@@ -96,7 +102,8 @@ namespace Mitos{
 		/**
 		*  @brief Empty the syringe
 		*
-		*  @param Address int
+		*  @param address int
+		*  @param amount int
 		*
 		*/
 		void dispense(const int address, const int amount);

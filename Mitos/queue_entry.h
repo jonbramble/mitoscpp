@@ -12,6 +12,10 @@
 
 namespace Mitos {
 
+	/**
+	*  @brief Class to represent the entries in the command queue
+	*
+	*/
 	class QueueEntry {
 
 		std::string command;
@@ -23,12 +27,11 @@ namespace Mitos {
 		/**
 		*  @brief Construct a command string object
 		*
-		*  @param Command string
-		*  @param Request string
-		*  @param Address int
+		*  @param _command string
+		*  @param _request string
+		*  @param _address int
 		*/
 		QueueEntry(std::string _command, std::string _request, int _address): command(_command), request(_request), address(_address){}
-
 
 		/**
 		*  @brief Get the command string for this entry
@@ -38,7 +41,6 @@ namespace Mitos {
 		std::string get_command() const{
 			return command;
 		}
-
 
 		/* @brief Get the request for this entry
 		*

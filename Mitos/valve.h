@@ -20,6 +20,11 @@ namespace Mitos {
 
 	enum class valve_position { A, B, C, D };
 
+	/**
+	*  @brief Class to represent and the valve state
+	*
+	*
+	*/
 	class Valve
 	{
 		const int address;
@@ -43,7 +48,7 @@ namespace Mitos {
 		/**
 		*  @brief Construct a valve object for each valve by address
 		*
-		*  @param Address int
+		*  @param _address int
 		*/
 		Valve(const int _address);
 		~Valve();
@@ -65,14 +70,14 @@ namespace Mitos {
 		/**
 		*  @brief Set the valve position
 		*
-		*  @param position valve_position
+		*  @param _pos valve_position
 		*/
 		void set_position(const valve_position _pos);
 
 		/**
 		*  @brief Set the valve motor state
 		*
-		*  @param motor int
+		*  @param _motor int
 		*/
 		void set_motor(const int _motor);
 
