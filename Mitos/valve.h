@@ -1,3 +1,11 @@
+/** @file valve.h
+*  @brief Class to represent and the valve state
+*
+*
+*  @author Jonathan Bramble (mbzjpb)
+*  Copyright 2016
+*/
+
 #pragma once
 
 #include "stdafx.h"
@@ -32,14 +40,40 @@ namespace Mitos {
 		std::string get_position_str() const; 
 
 	public:
+		/**
+		*  @brief Construct a valve object for each valve by address
+		*
+		*  @param Address int
+		*/
 		Valve(const int _address);
 		~Valve();
 
+		/**
+		*  @brief Return command string for port change
+		*
+		*  @return command string
+		*/
 		std::string get_port_cmd() const;
 
+		/**
+		*  @brief Return motor state for valve
+		*
+		*  @return motor state int
+		*/
 		int get_motor() const;
 
+		/**
+		*  @brief Set the valve position
+		*
+		*  @param position valve_position
+		*/
 		void set_position(const valve_position _pos);
+
+		/**
+		*  @brief Set the valve motor state
+		*
+		*  @param motor int
+		*/
 		void set_motor(const int _motor);
 
 	};

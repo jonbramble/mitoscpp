@@ -33,7 +33,7 @@ namespace Mitos {
 			return ret;
 		}
 
-		size_t CommandQueue::size(){
+		size_t CommandQueue::size() const{
 			return q.size();
 		}
 
@@ -59,12 +59,18 @@ namespace Mitos {
 			q.emplace_front(command, _request, address);
 		}
 
-		bool CommandQueue::empty(){
+		bool CommandQueue::empty() const{
 			return q.empty();
 		}
 
-		QueueEntry CommandQueue::first(){
+		QueueEntry CommandQueue::first() const{
 			return q.front();
 		}
+
+		std::string CommandQueue::first_request() const{
+			QueueEntry qe(q.front());
+			return qe.get_request();
+		}
+		
 
 }

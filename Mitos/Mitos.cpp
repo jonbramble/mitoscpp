@@ -18,11 +18,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mitos::XsDuoBasic pump;
 	pump.init();
 
-	pump.set_port(0, Mitos::valve_position::A);
-	pump.set_port(1, Mitos::valve_position::C);
+	//pump.set_port(0, Mitos::valve_position::A);
+	//pump.set_port(1, Mitos::valve_position::C);
 
-	pump.set_rate(0, 2500);
-	pump.fill_syringe(0);
+	//pump.set_rate(0, 2500);
+	//pump.fill_syringe(0);
 
 	pump.prepare_pump();
 

@@ -25,7 +25,7 @@ namespace Mitos {
 		*
 		*  @param Command string
 		*  @param Request string
-		*  @param Address string
+		*  @param Address int
 		*/
 		QueueEntry(std::string _command, std::string _request, int _address): command(_command), request(_request), address(_address){}
 

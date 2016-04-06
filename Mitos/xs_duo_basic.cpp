@@ -3,12 +3,11 @@
 
 namespace Mitos{
 
-	XsDuoBasic::XsDuoBasic(){
+	XsDuoBasic::XsDuoBasic(std::string _port){
 		unsigned long baud = 9600;
-		std::string port = "COM4";
-		sp = new serial::Serial(port, baud, serial::Timeout::simpleTimeout(2000));
+		sp = new serial::Serial(_port, baud, serial::Timeout::simpleTimeout(2000));
 
-		queues.emplace_back(0);
+		queues.emplace_back(0);				// calls constructors
 		queues.emplace_back(1);
 
 		syringes.emplace_back(0);
@@ -16,6 +15,10 @@ namespace Mitos{
 
 		valves.emplace_back(0);
 		valves.emplace_back(1);
+	}
+
+	XsDuoBasic::XsDuoBasic(): XsDuoBasic("COM4") {
+
 	}
 
 	bool XsDuoBasic::set_rate(const int address, const int rate){
