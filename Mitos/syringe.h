@@ -12,14 +12,14 @@
 
 namespace Mitos {
 
-	const std::string SET_PUMP_RATE = "E2 3";
-	const std::string MOVE_SYRINGE_POS = "E2 1";
-	const std::string SET_POSITION = "I3";
+	const std::string SET_PUMP_RATE = "E2 3";		///< Command to set pump rate
+	const std::string MOVE_SYRINGE_POS = "E2 1";		///< Command to move the position
+	const std::string SET_POSITION = "I3";			///< Command to set the position
 
-	const int ZERO_POSITION = 30000;
-	const int EMPTY_POSITION = 0;
+	const int ZERO_POSITION = 30000;			///< Fixed point for full
+	const int EMPTY_POSITION = 0;				///< Fixed point for empty
 
-	const int SYRINGE_SIZE = 2500;
+	const int SYRINGE_SIZE = 2500;				///< Hardcoded syringe size in ul
 
 	/**
 	*  @brief Class to represent and the syringe state
